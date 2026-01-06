@@ -1,0 +1,124 @@
+/* Enter Info Page - Unified for Name and City */
+.enter-info-page {
+  min-height: 100vh;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.enter-info-page .content-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.enter-info-page .input-section {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.enter-info-page .input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+}
+
+.enter-info-page .input-label {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.enter-info-page .info-input {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 2px solid #333;
+  background: transparent;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  color: #333;
+  text-transform: none;
+}
+
+.enter-info-page .info-input::placeholder {
+  color: #999;
+  text-transform: none;
+}
+
+.enter-info-page .navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  z-index: 3;
+}
+
+/* Center the rhombus background perfectly over the input */
+.enter-info-page .rhombus-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  animation: slowRotateClockwise 100s linear infinite;
+}
+
+/* Slow clockwise rotation animation */
+@keyframes slowRotateClockwise {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .enter-info-page .content-wrapper {
+    width: 90%;
+    height: 400px;
+  }
+  
+  .enter-info-page .info-input {
+    font-size: 20px;
+  }
+  
+  .enter-info-page .navigation-buttons {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .enter-info-page .content-wrapper {
+    width: 95%;
+    height: 350px;
+  }
+  
+  .enter-info-page .info-input {
+    font-size: 18px;
+  }
+  
+  .enter-info-page .input-label {
+    font-size: 12px;
+  }
+}

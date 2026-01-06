@@ -1,0 +1,229 @@
+/* Results Page */
+.results-page {
+  min-height: 100vh;
+  background: white;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.analysis-section {
+  position: absolute;
+  top: 100px;
+  left: 52px;
+  z-index: 10;
+}
+
+.results-page .main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+}
+
+.analysis-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1A1B1C;
+  margin: 0 0 10px 0;
+  letter-spacing: -2%;
+}
+
+.analysis-description {
+  font-size: 14px;
+  font-weight: 400;
+  color: #1A1B1C;
+  margin: 0;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+/* Diamond Container */
+.diamond-container {
+  position: relative;
+  width: 572px;
+  height: 572px;
+}
+
+.rhombus-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 572px;
+  height: 572px;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+.rhombus-background svg {
+  width: 100%;
+  height: 100%;
+}
+
+.diamond-diagram {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250px;
+  height: 250px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  z-index: 2;
+}
+
+.diamond-section {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+/* Only DEMOGRAPHICS section has grey background */
+.demographics-section {
+  top: 0;
+  left: 0;
+  background: #d2d1d1;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.demographics-section.hovered {
+  background: #c3c3c3;
+}
+
+.demographics-section.hovered .section-label {
+  transform: rotate(-45deg) scale(1.1);
+}
+
+.skin-type-section {
+  top: 0;
+  right: 0;
+}
+
+.cosmetic-concerns-section {
+  bottom: 0;
+  left: 0;
+}
+
+.weather-section {
+  bottom: 0;
+  right: 0;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1A1B1C;
+  text-align: center;
+  transform: rotate(-45deg);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  transition: transform 0.3s ease;
+}
+
+/* Navigation - Bottom Left and Right */
+.navigation-left {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  z-index: 3;
+}
+
+.navigation-right {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  z-index: 3;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: 20px 16px;
+  }
+  
+  .analysis-section {
+    left: 16px;
+    top: 80px;
+  }
+  
+  .analysis-title {
+    font-size: 20px;
+  }
+  
+  .analysis-subtitle {
+    font-size: 18px;
+  }
+  
+  .analysis-description {
+    font-size: 12px;
+  }
+  
+  .diamond-container {
+    width: 400px;
+    height: 400px;
+  }
+  
+  .rhombus-background {
+    width: 400px;
+    height: 400px;
+  }
+  
+  .diamond-diagram {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .section-label {
+    font-size: 10px;
+  }
+  
+  .navigation-left,
+  .navigation-right {
+    bottom: 20px;
+  }
+  
+  .navigation-left {
+    left: 20px;
+  }
+  
+  .navigation-right {
+    right: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .diamond-container {
+    width: 350px;
+    height: 350px;
+  }
+  
+  .rhombus-background {
+    width: 350px;
+    height: 350px;
+  }
+  
+  .diamond-diagram {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .section-label {
+    font-size: 9px;
+  }
+}
