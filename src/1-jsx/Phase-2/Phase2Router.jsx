@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CameraCapture from './CameraCapture';
-import CameraSetUpPage from './CameraSetUpPage';
+import CameraSetUpPage from './CameraSetUp';
 import ProcessingPage from './ProcessingPage';
 
 const Phase2Router = ({ mode = 'camera', imageData = null, onBack, onComplete }) => {

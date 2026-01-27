@@ -1,0 +1,67 @@
+.button-container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.button-left {
+  left: 32px;
+}
+
+.button-right {
+  right: 32px;
+}
+
+.button-center {
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
+}
+
+.button-icon {
+  width: auto;
+  height: auto;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.button-text {
+  font-size: 14px;
+  font-weight: 300;
+  color: #1A1B1C;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.button:hover .button-icon,
+.button.hovered .button-icon {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .button-container {
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: 1rem auto;
+  }
+  
+  .button {
+    flex-direction: row;
+    gap: 12px;
+  }
+}

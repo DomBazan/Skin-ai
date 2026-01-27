@@ -1,5 +1,5 @@
 import React from 'react';
-import Phase1Router from './1-jsx/phase-1/Phase1Router';
+import Phase1Router from './1-jsx/Phase-1/Phase1Router';
 
 function App() {
   return (

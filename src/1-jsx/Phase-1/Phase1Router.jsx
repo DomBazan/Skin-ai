@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import IntroPage from './IntroPage';
-import EnterInfoPage from './EnterInfoPage';
-import CameraSelectionPage from '../phase-2/CameraSelectionPage';
-import Phase2Router from '../phase-2/Phase2Router';
-import Phase3Router from '../phase-3/Phase3Router';
+import IntroPage from './Intro';
+import EnterInfoPage from './InfoPage';
+import CameraSelectionPage from '../Phase-2/CameraSelection';
+import Phase2Router from '../Phase-2/Phase2Router';
+import Phase3Router from '../Phase-3/Phase3Router';
 
 const Phase1Router = () => {
   const [currentScreen, setCurrentScreen] = useState('intro');
