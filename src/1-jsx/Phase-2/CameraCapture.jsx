@@ -22,14 +22,14 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     checkCameraPermission();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Add permission change listener
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (navigator.permissions && navigator.permissions.query) {
       navigator.permissions.query({ name: "camera" }).then((permission) => {
@@ -45,8 +45,8 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
         };
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Cleanup effect to stop camera when component unmounts
   useEffect(() => {
@@ -55,7 +55,6 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
 
       // Clear video element
       if (videoRef.current) {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
         videoRef.current.srcObject = null;
       }
 
@@ -80,14 +79,15 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
     };
   }, [stream]);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (stream && videoRef.current) {
       console.log("Setting video srcObject...");
       videoRef.current.srcObject = stream;
       console.log("Video srcObject set");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stream, videoRef.current]);
+  }, [stream]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const checkCameraPermission = async () => {
     try {
@@ -231,6 +231,7 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
     // 4. Reset all state
     setStream(null);
     setIsLoading(false);
+    setIsStartingCamera(false);
     setError(null);
 
     // 5. Small delay to ensure cleanup
@@ -442,3 +443,4 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
 };
 
 export default CameraCapture;
+
