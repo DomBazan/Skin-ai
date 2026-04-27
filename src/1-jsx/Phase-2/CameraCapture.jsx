@@ -13,7 +13,6 @@ import "../../2-css/phase-2/CameraCapture.css";
 const CameraCapture = ({ onBack, onImageCaptured }) => {
   const [stream, setStream] = useState(null);
   const [error, setError] = useState(null);
-  const [isCapturing, setIsCapturing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [permissionStatus, setPermissionStatus] = useState(null);
   const [isCheckingPermission, setIsCheckingPermission] = useState(true);
@@ -23,11 +22,14 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     checkCameraPermission();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Add permission change listener
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (navigator.permissions && navigator.permissions.query) {
       navigator.permissions.query({ name: "camera" }).then((permission) => {
@@ -43,6 +45,7 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
         };
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Cleanup effect to stop camera when component unmounts
@@ -52,6 +55,7 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
 
       // Clear video element
       if (videoRef.current) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
         videoRef.current.srcObject = null;
       }
 
@@ -82,6 +86,7 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
       videoRef.current.srcObject = stream;
       console.log("Video srcObject set");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stream, videoRef.current]);
 
   const checkCameraPermission = async () => {
@@ -160,8 +165,6 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
   const captureImage = () => {
     if (!videoRef.current || !canvasRef.current) return;
 
-    setIsCapturing(true);
-
     const video = videoRef.current;
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
@@ -228,7 +231,6 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
     // 4. Reset all state
     setStream(null);
     setIsLoading(false);
-    setIsCapturing(false);
     setError(null);
 
     // 5. Small delay to ensure cleanup
@@ -362,7 +364,7 @@ const CameraCapture = ({ onBack, onImageCaptured }) => {
             <div className="captured-photo-overlay">
               <img
                 src={capturedImageData}
-                alt="Captured photo"
+                alt="Captured"
                 className="captured-photo"
               />
             </div>

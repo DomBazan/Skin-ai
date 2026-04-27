@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import { ReactComponent as BackButton } from '../../assets/back-button-clean.svg';
@@ -15,27 +15,50 @@ const DemographicsPage = ({ demographicData, onBack, onConfirm }) => {
   const [currentPercentage, setCurrentPercentage] = useState(0);
   const [activeCategory, setActiveCategory] = useState('race'); // Track which category is active
 
+  const animateToPercentage = useCallback((targetPercentage) => {
+    const startPercentage = currentPercentage;
+    const duration = 800; // 0.8 seconds
+    const startTime = performance.now();
+
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Ease animation
+      const ease = 1 - Math.pow(1 - progress, 3);
+
+      const newPercentage = startPercentage + (targetPercentage - startPercentage) * ease;
+      setCurrentPercentage(newPercentage);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [currentPercentage]);
+
   useEffect(() => {
     if (demographicData) {
       // Set initial selections to highest confidence values
       const raceEntries = Object.entries(demographicData.race);
       const ageEntries = Object.entries(demographicData.age);
       const genderEntries = Object.entries(demographicData.gender);
-      
+
       const topRace = raceEntries.reduce((a, b) => a[1] > b[1] ? a : b);
       const topAge = ageEntries.reduce((a, b) => a[1] > b[1] ? a : b);
       const topGender = genderEntries.reduce((a, b) => a[1] > b[1] ? a : b);
-      
+
       setSelectedRace(topRace);
       setSelectedAge(topAge);
       setSelectedGender(topGender);
-      
+
       // Animate to the initial percentage (use the selected race percentage)
       setTimeout(() => {
         animateToPercentage(topRace[1]);
       }, 100); // Small delay to ensure component is fully mounted
     }
-  }, [demographicData]);
+  }, [demographicData, animateToPercentage]);
 
   const formatPercentage = (value) => {
     return Math.floor(value * 100).toFixed(2);
@@ -49,29 +72,6 @@ const DemographicsPage = ({ demographicData, onBack, onConfirm }) => {
 
   const getSortedEntries = (data) => {
     return Object.entries(data).sort((a, b) => b[1] - a[1]);
-  };
-
-  const animateToPercentage = (targetPercentage) => {
-    const startPercentage = currentPercentage;
-    const duration = 800; // 0.8 seconds
-    const startTime = performance.now();
-
-    const animate = (currentTime) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      // Ease animation
-      const ease = 1 - Math.pow(1 - progress, 3);
-      
-      const newPercentage = startPercentage + (targetPercentage - startPercentage) * ease;
-      setCurrentPercentage(newPercentage);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    requestAnimationFrame(animate);
   };
 
   const handleRaceSelect = (raceEntry) => {
@@ -129,32 +129,6 @@ const DemographicsPage = ({ demographicData, onBack, onConfirm }) => {
     }
   };
 
-  const getCategoryTitle = () => {
-    switch (activeCategory) {
-      case 'race':
-        return 'RACE A.I. CONFIDENCE';
-      case 'age':
-        return 'AGE A.I. CONFIDENCE';
-      case 'gender':
-        return 'GENDER A.I. CONFIDENCE';
-      default:
-        return 'RACE A.I. CONFIDENCE';
-    }
-  };
-
-  const getCategoryName = () => {
-    switch (activeCategory) {
-      case 'race':
-        return 'RACE';
-      case 'age':
-        return 'AGE';
-      case 'gender':
-        return 'GENDER';
-      default:
-        return 'RACE';
-    }
-  };
-
   const handleItemSelect = (item, confidence) => {
     if (activeCategory === 'race') {
       handleRaceSelect([item, confidence]);
@@ -162,24 +136,6 @@ const DemographicsPage = ({ demographicData, onBack, onConfirm }) => {
       handleAgeSelect([item, confidence]);
     } else if (activeCategory === 'gender') {
       handleGenderSelect([item, confidence]);
-    }
-  };
-
-  const handleReset = () => {
-    if (demographicData) {
-      const raceEntries = Object.entries(demographicData.race);
-      const ageEntries = Object.entries(demographicData.age);
-      const genderEntries = Object.entries(demographicData.gender);
-      
-      const topRace = raceEntries.reduce((a, b) => a[1] > b[1] ? a : b);
-      const topAge = ageEntries.reduce((a, b) => a[1] > b[1] ? a : b);
-      const topGender = genderEntries.reduce((a, b) => a[1] > b[1] ? a : b);
-      
-      setSelectedRace(topRace);
-      setSelectedAge(topAge);
-      setSelectedGender(topGender);
-      
-      setCurrentPercentage(Math.max(topRace[1], topAge[1], topGender[1]));
     }
   };
 
@@ -282,7 +238,7 @@ const DemographicsPage = ({ demographicData, onBack, onConfirm }) => {
             {/* Right Sidebar - Dynamic Category Table */}
             <div className="right-sidebar">
               <div className="table-title">
-                <span className="table-title-left">{getCategoryName()}</span>
+                <span className="table-title-left">{activeCategory.toUpperCase()}</span>
                 <span className="table-title-right">A.I. CONFIDENCE</span>
               </div>
               <div className="race-table">
@@ -295,7 +251,7 @@ const DemographicsPage = ({ demographicData, onBack, onConfirm }) => {
                     <div className="race-name-container">
                       <img 
                         src={getCurrentSelection() && getCurrentSelection()[0] === item ? activeRadioButton : radioButton}
-                        alt="radio button"
+                        alt="selection indicator"
                         className="radio-button"
                       />
                       <span className="race-name">{formatRaceName(item)}</span>
@@ -319,10 +275,26 @@ const DemographicsPage = ({ demographicData, onBack, onConfirm }) => {
         <div className="instruction-text">
           <p>If A.I. estimate is wrong, select the correct one.</p>
         </div>
-        <ResetButton className="reset-button" onClick={handleReset} />
+        <ResetButton className="reset-button" onClick={() => {
+          if (demographicData) {
+            const raceEntries = Object.entries(demographicData.race);
+            const ageEntries = Object.entries(demographicData.age);
+            const genderEntries = Object.entries(demographicData.gender);
+            
+            const topRace = raceEntries.reduce((a, b) => a[1] > b[1] ? a : b);
+            const topAge = ageEntries.reduce((a, b) => a[1] > b[1] ? a : b);
+            const topGender = genderEntries.reduce((a, b) => a[1] > b[1] ? a : b);
+            
+            setSelectedRace(topRace);
+            setSelectedAge(topAge);
+            setSelectedGender(topGender);
+            
+            setCurrentPercentage(Math.max(topRace[1], topAge[1], topGender[1]));
+          }
+        }} />
         <ConfirmButton 
           className="confirm-button" 
-          // onClick={handleConfirm} 
+          onClick={handleConfirm}
         />
       </div>
     </div>

@@ -6,7 +6,6 @@ import ProcessingPage from './ProcessingPage';
 const Phase2Router = ({ mode = 'camera', imageData = null, onBack, onComplete }) => {
   const [currentPage, setCurrentPage] = useState(mode === 'camera' ? 'setup' : mode);
   const [capturedImage, setCapturedImage] = useState(imageData);
-  const [demographicData, setDemographicData] = useState(null);
 
   console.log('Phase2Router initialized with mode:', mode, 'imageData:', imageData ? 'present' : 'null');
 
@@ -25,7 +24,6 @@ const Phase2Router = ({ mode = 'camera', imageData = null, onBack, onComplete })
     console.log('Processing complete, moving to demographics...');
     console.log('Phase2Router received data from ProcessingPage:', data);
     console.log('Calling onComplete with data:', data);
-    setDemographicData(data);
     // Move to Phase 3
     onComplete(data);
   };
